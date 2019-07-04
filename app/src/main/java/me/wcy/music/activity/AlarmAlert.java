@@ -52,7 +52,7 @@ public class AlarmAlert extends Activity
         }
         mediaPlayer.start();
         alertDialog =new AlertDialog.Builder(AlarmAlert.this)
-                .setTitle("闹钟!!")
+                .setTitle("智慧闹钟")
                 .setMessage("小主人，时间到了，快起来吧!!!")
                 .setPositiveButton("关掉它",
                         (dialog, whichButton) -> {

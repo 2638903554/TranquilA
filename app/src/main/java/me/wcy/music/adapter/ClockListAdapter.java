@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ClockListAdapter extends BaseAdapter {
     private Context context;
+    private boolean switchstate;
+    private Clock clock;
     private LayoutInflater layoutInflater;
     private ArrayList<Clock> clockArrayList;
     private View.OnClickListener listener;
@@ -69,34 +72,88 @@ public class ClockListAdapter extends BaseAdapter {
         AlarmManager am;
         am = (AlarmManager)context.getSystemService(ALARM_SERVICE);
         am.cancel(sender);
-        Toast.makeText(context,"闹钟时间删除", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"闹钟取消", Toast.LENGTH_SHORT).show();
     }
-    public void openclock(int hour,int minute,int position,int interval,int ring,boolean[] week){
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            am.setWindow(AlarmManager.RTC_WAKEUP, calMethod(week, calendar.getTimeInMillis()),
-                    intervalMillis, sender);
-        } else {
-            if (flag == 0) {
-                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);*/
-        int times=interval*60 *1000;
-        Calendar c= Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        c.set(Calendar.HOUR_OF_DAY,hour);
-        c.set(Calendar.MINUTE,minute);
-        Intent i = new Intent(context, CallAlarm.class);
+    public void open(int hour,int minute,int position,int interval,int ring,boolean[] week){
+        Calendar c=Calendar.getInstance();
+        switch (c.get(Calendar.DAY_OF_WEEK)) {
+            case Calendar.SUNDAY:
+                if (week[6]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            case Calendar.MONDAY:
+                if (week[0]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+
+            case Calendar.TUESDAY:
+                if (week[1]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            case Calendar.WEDNESDAY:
+                if (week[2]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            case Calendar.THURSDAY:
+                if (week[3]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            case Calendar.FRIDAY:
+                if (week[4]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            case Calendar.SATURDAY:
+                if (week[5]){
+                    openclock(hour,minute,position,interval,ring);
+                }
+                break;
+            default:
+                break;
+
+        }
+
+    }
+
+
+    //设置闹钟时间
+    public void openclock(int hour,int minute,int position,int interval,int ring){
+        //Log.d("clock","hour  "+hour+"minite"+minute+"interval"+interval+"position"+position);
+
+        Calendar c = Calendar.getInstance();
+        //long time=System.currentTimeMillis();
+        long times=interval*60 *1000;
+        long sethourInMillis = hour * 3600 * 1000;
+        long setmninuteInMillis = minute* 60 * 1000;
+        long nowMinuteInMillis = c.get(Calendar.MINUTE) * 1000 * 60;
+        long nowHoursInMillis = c.get(Calendar.HOUR_OF_DAY) * 1000 * 3600;
+        long nowSecondInMills=c.get(Calendar.SECOND)*1000;
+        long TimeInMills=sethourInMillis+setmninuteInMillis-nowMinuteInMillis-nowHoursInMillis-nowSecondInMills+5000;
+        //闹钟和现在的时间间隔毫秒
+        if(TimeInMills<0){
+            TimeInMills+=24*3600*1000;
+        }
+        Intent intent = new Intent(context, CallAlarm.class);
         String str=ring+"th";
-        Toast.makeText(context,str,Toast.LENGTH_LONG).show();
-        i.putExtra("RING",str);
-        PendingIntent sender = PendingIntent.getBroadcast(context,position, i, 0);
-        AlarmManager am;
-        am = (AlarmManager)context.getSystemService(ALARM_SERVICE);
+       // Log.d("clocktime",TimeInMills+ "interval"+times);
+        intent.putExtra("RING",str);
+        PendingIntent sender = PendingIntent.getBroadcast(context,position, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager)context.getSystemService(ALARM_SERVICE);
         if(interval==0){
-            am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), sender);
+            Log.d("clocktime","am.set successful");
+            am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+TimeInMills,sender);
         }
         else {
-            am.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),times,sender);
+            Log.d("systm","am.setrepeat successful0");
+            am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+TimeInMills,1000+times,sender);
         }
-        Toast.makeText(context,"设置闹钟为"+ hour+":"+minute, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(context,"响铃时间  "+ hour+" 时"+minute+" 分", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -121,7 +178,9 @@ public class ClockListAdapter extends BaseAdapter {
         final Clock clock= clockArrayList.get(position);       //clock列表中的clock
         final String pos=position+"";
         final Clock clockget=getclock(pos+"");           //位于此处的clock从文件中获取得到的clock对象
+       // Log.d("test",getclock(pos+"").getSwitchstate()+"");
         holder.clock_ringtime.setText(clockget.getTime());
+        holder.clock_switchbutton.setChecked(clockget.getSwitchstate());
         holder.clock_switchbutton.setOnClickListener(listener);
         holder.clock_switchbutton.setTag(position);
 
@@ -129,9 +188,12 @@ public class ClockListAdapter extends BaseAdapter {
         holder.clock_switchbutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(buttonView.isChecked()){
-                    openclock(clockget.getHour(),clockget.getMinute(),position,clockget.getIntervaltime(),clockget.getRing(),clockget.getWorkday());
+                    saveclock(pos,clockget,true);
+//                    Log.d("clock","hour  "+clockget.getHour()+"minite"+clockget.getMinute()+"interval"+clockget.getIntervaltime()+"position"+position
+//                    +"ring");
+                    open(clockget.getHour(),clockget.getMinute(),position,clockget.getIntervaltime(),clockget.getRing(),clockget.getWorkday());
                 }else{
-
+                    saveclock(pos,clockget,false);
                     closeclock(position);
                 }
             }
@@ -143,62 +205,29 @@ public class ClockListAdapter extends BaseAdapter {
         Clock clock=new Clock();
         String key="KEY_CLOCK_"+i+"th";
         SharedPreferences sp = context.getSharedPreferences("SP_CLOCK", MODE_PRIVATE);
-        // Toast.makeText(context,sp.toString(),Toast.LENGTH_LONG).show();
         String clockJson = sp.getString(key,""); //取出key为"KEY_PEOPLE_DATA"的值，如果值为空，则将第二个参数作为默认值赋值
         if(clockJson!="")  //防空判断
         {
             Gson gson = new Gson();
-            // Toast.makeText(context,clockJson,Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,clockJson,Toast.LENGTH_LONG).show();
             clock = gson.fromJson(clockJson, Clock.class); //将json字符串转换成 people对象
         }
 
         return clock;
     }
-   /* private static long calMethod(boolean[] week, long dateTime) {
-        long time = 0;
-        //weekflag == 0表示是按天为周期性的时间间隔或者是一次行的，weekfalg非0时表示每周几的闹钟并以周为时间间隔
-        if (weekflag != 0) {
-            Calendar c = Calendar.getInstance();
-            int week = c.get(Calendar.DAY_OF_WEEK);
-            if (1 == week) {
-                week = 7;
-            } else if (2 == week) {
-                week = 1;
-            } else if (3 == week) {
-                week = 2;
-            } else if (4 == week) {
-                week = 3;
-            } else if (5 == week) {
-                week = 4;
-            } else if (6 == week) {
-                week = 5;
-            } else if (7 == week) {
-                week = 6;
-            }
-
-            if (weekflag == week) {
-                if (dateTime > System.currentTimeMillis()) {
-                    time = dateTime;
-                } else {
-                    time = dateTime + 7 * 24 * 3600 * 1000;
-                }
-            } else if (weekflag > week) {
-                time = dateTime + (weekflag - week) * 24 * 3600 * 1000;
-            } else if (weekflag < week) {
-                time = dateTime + (weekflag - week + 7) * 24 * 3600 * 1000;
-            }
-        } else {
-            if (dateTime > System.currentTimeMillis()) {
-                time = dateTime;
-            } else {
-                time = dateTime + 24 * 3600 * 1000;
-            }
-        }
-        return time;
+    private void saveclock(String i,Clock clock,boolean switchstate){   //保存闹钟当前设置内容
+        Clock clockitem=new Clock();
+        clockitem=clock;
+        String key="KEY_CLOCK_"+i+"th";
+        clockitem.setSwitchstate(switchstate);
+        SharedPreferences sp = context.getSharedPreferences("SP_CLOCK",MODE_PRIVATE);//创建sp对象,如果有key为"SP_PEOPLE"的sp就取出，否则就创建一个此key的sp对象
+        Gson gson=new Gson();
+        String jsonStr=gson.toJson(clockitem);
+        SharedPreferences.Editor edit=sp.edit();
+        edit.putString(key, jsonStr) ;
+        edit.commit();
+      //  Toast.makeText(context,edit.commit()+"",Toast.LENGTH_LONG).show();
     }
-
-
-}*/
 
 
 }

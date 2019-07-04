@@ -65,7 +65,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/padding10"
                 android:text="工作日"
-                android:textSize="@dimen/fontsize20" />
+                android:textSize="@dimen/fontsize15" />
             <TextView
                 android:id="@+id/day_text"
                 android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="@dimen/padding10"
-                android:textSize="@dimen/fontsize20"
+                android:textSize="@dimen/fontsize15"
                 android:text="铃声"/>
 
             <TextView
@@ -158,9 +158,10 @@
                 android:gravity="center|right"
                 android:paddingRight="@dimen/padding10"
                 android:text="铃声名"
-                android:textSize="@dimen/fontsize20" />
+                android:textSize="@dimen/fontsize15" />
 
         </LinearLayout>
+        <TextView style="@style/horizontal_line_style"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -171,16 +172,17 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/padding10"
                 android:text="闹钟间隔"
-                android:textSize="@dimen/fontsize20" />
+                android:textSize="@dimen/fontsize15" />
             <TextView
                 android:id="@+id/intervaltext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|right"
                 android:paddingRight="@dimen/padding10"
-                android:textSize="@dimen/fontsize20"
+                android:textSize="@dimen/fontsize13"
                 android:text="只响一次"/>
         </LinearLayout>
+        <TextView style="@style/horizontal_line_style"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"

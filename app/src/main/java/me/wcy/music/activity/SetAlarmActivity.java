@@ -49,6 +49,7 @@ public class SetAlarmActivity extends BaseActivity implements View.OnClickListen
     public boolean[] workday={false,false,false,false,false,false,false};
     public String[]rings={"默认铃声","电话铃声","新闻联播","雪之梦","皮卡丘","叮铃铃","SJLT","八音盒","月宝宝","Kalimbell"};
     public String str;
+    public boolean switchstate;
     public String str_interval;
     String clockid;
     @Override
@@ -63,12 +64,14 @@ public class SetAlarmActivity extends BaseActivity implements View.OnClickListen
             clocknow=new Clock();
             str=rings[0];
             ringnumber=1;
+            switchstate=true;
         }else{
             clocknow=getclock(clockid);
             hour=clocknow.getHour();
             minute=clocknow.getMinute();
             str=clocknow.getRingname();
             ringnumber=clocknow.getRing();
+            switchstate=clocknow.getSwitchstate();
         }
         clockDisplay(clocknow);
 
@@ -201,6 +204,7 @@ public class SetAlarmActivity extends BaseActivity implements View.OnClickListen
         clocknow.setRingname(str);
         clocknow.setRing(ringnumber);
         clocknow.setWorkday(workday);
+        clocknow.setSwitchstate(switchstate);
         clocknow.setIntervaltime(intervaltime);
         clocknow.setIntervaltext(str_interval);
         clocknow.setWorkday(Mon.isChecked(),Tue.isChecked(),Wed.isChecked(),Thu.isChecked(),Fri.isChecked(),Sat.isChecked(),Sun.isChecked());
@@ -265,7 +269,6 @@ public class SetAlarmActivity extends BaseActivity implements View.OnClickListen
         SharedPreferences sp = getSharedPreferences("SP_RING",MODE_PRIVATE);                     //创建sp对象,如果有key为"SP_PEOPLE"的sp就取出
         String ringvalue = sp.getString("NUM","");
         ringnumber=Integer.valueOf(ringvalue);
-        //Toast.makeText(getBaseContext(),"num"+ringnumber,Toast.LENGTH_LONG).show();
         str=rings[ringnumber];
         ringname.setText(str);
 

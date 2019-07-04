@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.hwangjr.rxbus.RxBus;
 
@@ -27,11 +30,11 @@ import me.wcy.music.activity.SetAlarmActivity;
 import me.wcy.music.adapter.ClockListAdapter;
 import me.wcy.music.utils.binding.Bind;
 
+
 public class ClockFragment extends BaseFragment {
 
     @Bind(R.id.clock_List)
     public ListView clockListView;
-    private int number=0;
     private int hour;
     private int minute;
     Switch itemswitch;
@@ -49,17 +52,15 @@ public class ClockFragment extends BaseFragment {
 //        ViewUtils.inject(this);
         clockListView = view.findViewById(R.id.clock_List);
         clockListView.setAdapter(new ClockListAdapter(getActivity(), loadClockList()));
+
         clockListView.setOnItemClickListener((parent, view1, position, id) -> {
 
-            View itemview=clockListView.getChildAt(position-clockListView.getFirstVisiblePosition());
-            itemswitch= itemview.findViewById(R.id.clock_statebutton);
-            number=position-parent.getFirstVisiblePosition();//number为列表中的第几项，从0开始；
-            TextView clockringtime=itemview.findViewById(R.id.clock_ringtime);
+            itemswitch= view1.findViewById(R.id.clock_statebutton);
+            TextView clockringtime=view1.findViewById(R.id.clock_ringtime);
             Intent intent=new Intent(getActivity(),SetAlarmActivity.class);
-            intent.putExtra("itemid",number+"th");
-            //Toast.makeText(getActivity(), "dsj"+number, Toast.LENGTH_SHORT).show();
+            intent.putExtra("itemid",position+"th");
+           // Toast.makeText(getActivity(), position+"i", Toast.LENGTH_SHORT).show();
             startActivity(intent);
-
         });
         return view;
     }
@@ -87,6 +88,10 @@ public class ClockFragment extends BaseFragment {
         clockArrayList.add(addClock(0,0));
         clockArrayList.add(addClock(0,0));
         clockArrayList.add(addClock(0,0));
+        clockArrayList.add(addClock(0,0));
+        clockArrayList.add(addClock(0,0));
+        clockArrayList.add(addClock(0,0));
+        clockArrayList.add(addClock(0,0));
         return clockArrayList;
     }
 
@@ -94,7 +99,6 @@ public class ClockFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         clockListView.setAdapter(new ClockListAdapter(getActivity(), loadClockList()));
-
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

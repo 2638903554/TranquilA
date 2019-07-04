@@ -7,6 +7,7 @@
     <dimen name="screen_tips_top">80dp</dimen>
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="fontsize13">13dp</dimen>
+    <dimen name="fontsize15">15dp</dimen>
     <dimen name="fontsize20">20dp</dimen>
     <dimen name="fontsize25">25dp</dimen>
     <dimen name="fontsize30">30dp</dimen>

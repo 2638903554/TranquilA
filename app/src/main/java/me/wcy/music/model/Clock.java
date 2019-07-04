@@ -3,6 +3,7 @@ package me.wcy.music.model;
 public class Clock {
     private int hour;
     private int minute;
+    private boolean switchstate;
     private String ringname;
     private String remindway;
     private int ring;
@@ -22,6 +23,12 @@ public class Clock {
     public Clock() {
         ;
     }
+    public void setSwitchstate(boolean switchstate){
+        this.switchstate=switchstate;
+    }
+    public boolean getSwitchstate(){
+        return this.switchstate;
+    }
     public void setIntervaltext(String intervaltext){
         this.intervaltext =intervaltext;
     }
@@ -39,7 +46,16 @@ public class Clock {
         this.minute=minute;
     }
     public String getTime(){
-        return (hour+":"+minute);
+        String str_hour,str_minute;
+        if(hour<10)
+            str_hour="0"+hour;
+        else
+            str_hour=""+hour;
+        if(minute<10)
+            str_minute="0"+minute;
+        else
+            str_minute=""+minute;
+        return (str_hour+" : "+str_minute);
     }
     public int getHour(){return this.hour;}
     public int getMinute(){return this.minute;}

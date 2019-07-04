@@ -18,13 +18,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:gravity="center"
             android:text="铃声"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -32,12 +32,12 @@
             android:id="@+id/ring_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="电话铃声"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -45,12 +45,12 @@
             android:id="@+id/ring_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="新闻联播"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -58,12 +58,12 @@
             android:id="@+id/ring_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="雪之梦"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -71,12 +71,12 @@
             android:id="@+id/ring_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="皮卡丘"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -84,12 +84,12 @@
             android:id="@+id/ring_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="叮铃铃"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -97,12 +97,12 @@
             android:id="@+id/ring_6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="SJLT"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -110,34 +110,34 @@
             android:id="@+id/ring_7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="八音盒"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
         <TextView style="@style/horizontal_line_style"/>
         <TextView
             android:id="@+id/ring_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="月宝宝"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
         <TextView style="@style/horizontal_line_style"/>
         <TextView
             android:id="@+id/ring_9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:drawableRight="@null"
             android:text="Kalimbell"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView style="@style/horizontal_line_style"/>
 
@@ -145,17 +145,17 @@
             android:id="@+id/ring_sure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:gravity="center"
             android:drawableRight="@null"
             android:text="确定"
             android:textColor="@color/black_33"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             style="@style/horizontal_line_style"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 </RelativeLayout>
